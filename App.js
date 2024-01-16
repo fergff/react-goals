@@ -3,16 +3,29 @@ import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-nativ
 import React, { useState } from 'react';
 
 export default function App() {
-  
+
+  const [newgoal, setNewGoalText] = useState('');
+  const [courseGoals, setCourseGoals] = useState([]);
+
+  function textChangedtext(enteredText) {
+    setNewGoalText(enteredText);
+  }
+
+  function aniadirGoal() {
+        setCourseGoals((currentCourseGoals) => [
+      ...currentCourseGoals,
+      newgoal,
+    ]);
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.centar}>
-        <TextInput style={styles.campo} placeholder="Input your Goal!!"/>
-        <Button title="Add goal"/>
+        <TextInput style={styles.campo} placeholder="Input your Goal!!" onChangeText={textChangedtext}/>
+        <Button title="Add goal" onPress={aniadirGoal}/>
       </View>
       <View style={[styles.lista, styles.hr]}>
-        <Text style={styles.tamanio1} >- Your list of goals.....</Text>
+        {courseGoals.map((goal) => <Text style={styles.tamanio1} key={goal}>-{goal}</Text>)}
       </View>
     </View>
   );
